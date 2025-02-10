@@ -1,0 +1,41 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env  # Ensure this file is in the same directory as docker-compose.yml
+    environment:
+      - DB_HOST=db-1  # Override DB_HOST to ensure it points to the correct service
+      - TZ=Asia/Tokyo  # Set the timezone
+    ports:
+      - "8081:8081"
+    depends_on:
+      db-1:
+        condition: service_healthy
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+
+  db-1:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      TZ: Asia/Tokyo  # Set the timezone
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./cmd/migrate/migrations:/app/cmd/migrate/migrations
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+volumes:
+  db1_data:

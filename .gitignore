@@ -1,0 +1,36 @@
+# Environment files
+docker-compose.env
+.env
+.env.*
+*.env
+**/backend/.env
+**/frontend/.env
+
+# Dependencies
+**/node_modules
+**/dist
+**/vendor
+
+# Build and binary files
+**/*.exe
+backend/bin/*
+backend/tmp/*
+backend/cmd/tmp/*
+
+# System files
+.DS_Store
+**/.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Frontend specific
+frontend/dist
+frontend/.cache
+frontend/build
+frontend/coverage
+
+# Backend specific
+backend/*.test
+backend/*.out

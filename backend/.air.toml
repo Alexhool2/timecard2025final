@@ -1,0 +1,16 @@
+[build]
+cmd = "go build -o ./tmp/app cmd/main.go"
+bin = "tmp/app"
+  args_bin = ["-cert", "localhost.pem", "-key", "localhost-key.pem"] # Flags do TLS
+include_dir = [".", "cmd", "config", "service", "types", "utils", "db"]
+exclude_dir = ["vendor", "node_modules", "tmp", "bin"]
+include_ext = ["go", "tmpl", "tpl", "html", "js", "css", "env", "sql", "json", "yaml", "yml"]
+exclude_file = []
+delay = 1000
+
+[clean]
+clean = true
+clean_on_exit = true
+
+[screen]
+clear_on_rebuild = true
