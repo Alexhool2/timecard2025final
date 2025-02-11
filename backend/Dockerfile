@@ -6,6 +6,9 @@ WORKDIR /app
 # Copy go.mod and go.sum first
 COPY go.mod go.sum ./
 
+# Install Air in the builder stage
+RUN CGO_ENABLED=0 GOOS=linux go install github.com/cosmtrek/air@v1.45.0
+
 # Download dependencies
 RUN go mod download
 
@@ -20,21 +23,23 @@ FROM alpine:latest
 
 WORKDIR /app
 
-# Install minimal dependencies
-RUN apk add --no-cache ca-certificates tzdata bash  # Add bash here
+# Install minimal dependencies including make
+RUN apk add --no-cache ca-certificates tzdata bash go make
 
-# Copy binary from builder stage
+# Copy binary and air from builder stage
 COPY --from=builder /app/main .
-COPY --from=builder /app/.env .
+COPY --from=builder /go/bin/air /usr/local/bin/air
+COPY .air.toml .
 
 # Create directory for any potential file storage
 RUN mkdir -p /app/data
 
 # Set permissions
 RUN chmod +x /app/main
+RUN chmod +x /usr/local/bin/air
 
 # Expose application port
 EXPOSE 8081
 
 # Run command
-CMD ["./main"]
+CMD ["/usr/local/bin/air", "-c", ".air.toml"]
