@@ -6,7 +6,7 @@ RUN npm install
 COPY . .
 
 # Copy .env file
-COPY .env .
+
 
 EXPOSE 5173
 CMD ["npm", "run", "dev", "--", "--host"]
