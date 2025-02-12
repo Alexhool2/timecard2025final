@@ -1,20 +1,27 @@
 services:
+  db-1:
+    image: mysql:8.0
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./backend/cmd/migrate/migrations:/app/cmd/migrate/migrations
+
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     env_file:
-      - docker-compose.env
-    environment:
-      DB_HOST: db-1
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_NAME: ${DB_NAME}
-      TZ: Asia/Tokyo
+      - .env
     ports:
       - "8081:8081"
     depends_on:
-      db-1:
-        condition: service_healthy
+      - db-1
     restart: always
     volumes:
       - ./backend:/app
@@ -27,7 +34,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     env_file:
-      - docker-compose.env
+      - .env
     ports:
       - "5173:5173"
     volumes:
@@ -35,27 +42,6 @@ services:
       - /app/node_modules
     depends_on:
       - backend
-    restart: always
-
-  db-1:
-    image: mysql:8.0
-    env_file:
-      - docker-compose.env
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      TZ: Asia/Tokyo
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - ./backend/cmd/migrate/migrations:/app/cmd/migrate/migrations
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD}"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
     restart: always
 
 volumes:

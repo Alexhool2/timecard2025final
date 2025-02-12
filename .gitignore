@@ -1,10 +1,10 @@
 # Environment files
-docker-compose.env
-.env
-.env.*
-*.env
-**/backend/.env
-**/frontend/.env
+# docker-compose.env
+# .env
+# .env.*
+# *.env
+# **/backend/.env
+# **/frontend/.env
 
 # Dependencies
 **/node_modules
