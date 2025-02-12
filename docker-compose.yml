@@ -8,6 +8,7 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
     ports:
       - "3306:3306"
+    restart: always
     volumes:
       - mysql_data:/var/lib/mysql
       - ./backend/cmd/migrate/migrations:/app/cmd/migrate/migrations
