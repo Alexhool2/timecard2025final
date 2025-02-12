@@ -24,6 +24,8 @@ services:
     depends_on:
       - db-1
     restart: always
+    environment:
+      TZ: Asia/Tokyo
     volumes:
       - ./backend:/app
       - go-modules:/go/pkg/mod
@@ -42,6 +44,17 @@ services:
       - ./frontend:/app
       - /app/node_modules
     depends_on:
+      - backend
+    restart: always
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
       - backend
     restart: always
 
