@@ -8,6 +8,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${APP_DB_PASSWORD}
     command: 
       - --default-authentication-plugin=mysql_native_password
       - --authentication-policy=mysql_native_password
@@ -17,7 +20,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - ./backend/cmd/migrate/migrations:/app/cmd/migrate/migrations
-      - ./mysql-init:/docker-entrypoint-initdb.d
+     
 
   backend:
     build:
