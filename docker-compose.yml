@@ -1,8 +1,6 @@
 services:
   db-1:
-    build:
-      context: .
-      dockerfile: mysql/Dockerfile
+    image: mysql:8.0
     env_file:
       - .env
     environment:
