@@ -6,14 +6,11 @@ services:
     env_file:
       - .env
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD} # Mantenha esta linha
+      MYSQL_DATABASE: ${DB_NAME}         # Mantenha esta linha
+      MYSQL_ROOT_HOST: '%'  
     command: 
       - --default-authentication-plugin=mysql_native_password
-      - --authentication-policy=mysql_native_password
     ports:
       - "3306:3306"
     restart: always
