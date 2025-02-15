@@ -1,7 +1,6 @@
 import { ConflictError, UnauthorizedError } from "../errors/http_errors"
 
 const API_URL = import.meta.env.VITE_API_URL
-console.log("API URL:", API_URL)
 
 async function fetchData(input: RequestInfo, init?: RequestInit) {
   const response = await fetch(input, {
