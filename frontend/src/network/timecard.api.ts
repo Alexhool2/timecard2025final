@@ -3,27 +3,27 @@ import { ConflictError, UnauthorizedError } from "../errors/http_errors"
 const API_URL = import.meta.env.VITE_API_URL
 
 async function fetchData(input: RequestInfo, init?: RequestInit) {
-  const response = await fetch(input, {
-    ...init,
-    credentials: "include",
-  })
-  if (response.ok) {
-    return response
-  } else {
-    const errorBody = await response.json()
-    const errorMessage = errorBody.error
-    if (response.status === 401) {
-      throw new UnauthorizedError(errorMessage)
-    } else if (response.status === 409) {
-      throw new ConflictError(errorMessage)
+  try {
+    const response = await fetch(input, {
+      ...init,
+      credentials: "include",
+    })
+    if (response.ok) {
+      return response
     } else {
-      throw Error(
-        "Request failed with status " +
-          response.status +
-          "message:" +
-          errorMessage
-      )
+      if (response.status === 401) {
+        throw new UnauthorizedError("Authentication failed")
+      } else if (response.status === 409) {
+        throw new ConflictError("Resource conflict")
+      } else {
+        throw Error("Request failed. Please try again later.")
+      }
     }
+  } catch (error) {
+    if (error instanceof UnauthorizedError || error instanceof ConflictError) {
+      throw error
+    }
+    throw new Error("Connection failed. Please check your internet connection.")
   }
 }
 
