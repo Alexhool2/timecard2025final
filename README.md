@@ -21,6 +21,11 @@ This is a work-in-progress project for an electronic time tracking system, built
 
 ## For testing and check features available
 
-http://47.239.132.43/
+http://54.250.240.137
 login: tester 
 password: tester
+
+
+for more information and how to use:
+
+https://www.canva.com/design/DAGni5nEvVM/x9PkECvToX34CXuVJZ_6vw/view?utm_content=DAGni5nEvVM&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hf4268b4940
