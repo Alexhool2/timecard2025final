@@ -57,6 +57,12 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+    restart: always
     mem_limit: 128m   # Limite para nginx
 
 volumes:
