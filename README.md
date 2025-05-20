@@ -17,7 +17,7 @@ This is a work-in-progress project for an electronic time tracking system, built
 - Nginx
 - MySQL
 - Docker (for local development)
-- deployed on Alibaba vps
+- deployed on Aws
 
 ## For testing and check features available
 
