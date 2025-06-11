@@ -22,8 +22,8 @@ This is a work-in-progress project for an electronic time tracking system, built
 ## For testing and check features available
 
 http://54.250.240.137
-login: tester 
-password: tester
+
+For testing porpouse please ask for login and password information.
 
 
 for more information and how to use:
